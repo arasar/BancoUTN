@@ -18,6 +18,7 @@ public class Simular extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //PRUEBA AGUS
         Log.e("AppBanco", "onCreate: "+binding);
         setContentView(R.layout.activity_main);
         binding = SimularBinding.inflate(getLayoutInflater());
