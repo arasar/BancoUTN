@@ -1,25 +1,26 @@
 package com.example.bancoutn_triplea;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.bancoutn_triplea.databinding.ActivityMainBinding;
+import com.example.bancoutn_triplea.databinding.SimularBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class Simular extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    private SimularBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("AppBanco", "onCreate: "+binding);
         setContentView(R.layout.activity_main);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = SimularBinding.inflate(getLayoutInflater());
         Toolbar tool1 = binding.toolbar;
         setSupportActionBar(tool1);
         String [] opciones_monedas = new String[] {"PESOS","DOLARES"};
