@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context=".MainActivity">
+    tools:context=".Simular">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,7 +16,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="Constituir plazo fijo"
-    />
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -120,12 +120,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Simular" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -135,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
                 android:layout_alignParentBottom = "true"
-                android:text="Constituir" />
+                android:text="Confirmar" />
         </RelativeLayout>
 
 
