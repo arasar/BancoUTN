@@ -112,7 +112,7 @@
                 android:text="Moneda" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spinnerMonedas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
@@ -129,16 +129,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <Button
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="20sp"
-                android:layout_alignParentBottom = "true"
                 android:text="Constituir" />
         </RelativeLayout>
 
 
     </LinearLayout>
+
 
 </LinearLayout>
