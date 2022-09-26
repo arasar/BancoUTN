@@ -15,7 +15,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="Constituir plazo fijo"
+        app:title="Simular plazo fijo"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,11 +45,6 @@
                 android:text="Banco UTN Santa Fe" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Para constituir tu plazo fijo necesitamos que nos proveas algunos datos" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,10 +57,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center_vertical"
                 android:layout_weight="1"
-                android:text="Nombre" />
+                android:text="Tasa Nominal Anual" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/TasaNominal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
@@ -77,7 +72,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="78dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -86,10 +81,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center_vertical"
                 android:layout_weight="1"
-                android:text="Apellido" />
+                android:text="Tasa Efectiva Anual" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/TasaEfectiva"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
@@ -101,23 +96,90 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="81dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="144dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center_vertical"
-                android:text="Moneda" />
+                android:layout_weight="1"
+                android:text="Capital a Invertir ($)" />
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/CapitalAInvertir"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
-                android:minHeight="48dp" />
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="" />
 
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="8"
+
+            />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="X días" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Con renovación automática" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:text="Simulador Plazo Fijo en Pesos" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Plazo: X días" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Capital: " />
+            <!--Hay que autocompletar con los datos ingresados-->
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Intereses ganados: $ " />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Monto total: $ " />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Monto total anual: $ " />
         </LinearLayout>
 
         <RelativeLayout
@@ -130,6 +192,7 @@
                 android:layout_marginBottom="20sp"
                 android:layout_alignParentBottom = "true"
                 android:text="Confirmar" />
+
         </RelativeLayout>
 
 
