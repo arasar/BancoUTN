@@ -28,5 +28,4 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monedas.setAdapter(adapter);
     }
-    //Hola
 }
