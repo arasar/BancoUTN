@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("AppBanco", "onCreate: "+binding);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         Toolbar tool1 = binding.toolbar;
         setSupportActionBar(tool1);
         String [] opciones_monedas = new String[] {"PESOS","DOLARES"};
@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monedas.setAdapter(adapter);
 
-        Button boton = binding.button2;
-        boton.setOnClickListener(view -> mostrarAlerta());
-
+        Button constituirBtn = binding.button2;
+        constituirBtn.setEnabled(false);
+        constituirBtn.setOnClickListener(view -> mostrarAlerta());
     }
 
     private void mostrarAlerta() {
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void mostrarPantallaSimular(View view){
         Intent intent = new Intent(this, SimularActivity.class);
-
         startActivity(intent);
     }
 }
