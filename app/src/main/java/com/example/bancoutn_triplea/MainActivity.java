@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -31,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones_monedas);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monedas.setAdapter(adapter);
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
-        adapter.addAll(Arrays.asList("PESOS","DOLARES"));
-        binding.spinnerMonedas.setAdapter(adapter);*/
 
         Button boton = binding.button2;
         boton.setOnClickListener(view -> mostrarAlerta());
@@ -46,5 +45,11 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage("Tu plazo fijo de {capital} {moneda} por {dias} ha sido constituido!")
                 .setPositiveButton("Piola!", (dialogInterface, which) -> Log.d("Mensaje","Plazo fijo constituido"))
                 .show();
+    }
+
+    public void mostrarPantallaSimular(View view){
+        Intent intent = new Intent(this, SimularActivity.class);
+
+        startActivity(intent);
     }
 }
