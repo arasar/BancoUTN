@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("moneda", adapter.getItem(monedas.getSelectedItemPosition()));
         //para habilitar el constituir y probar el cuadro (hay que arreglar)
         Button constituirBtn = binding.button2;
-        constituirBtn.setEnabled(true);
         startActivityForResult(intent, SIMULAR_ACTIVITY_REQUEST_CODE);
     }
 
