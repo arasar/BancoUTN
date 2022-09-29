@@ -41,9 +41,7 @@ public class SimularActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.putExtra("simulado",simularBtnActivo);
-                setResult(RESULT_OK, intent);
+                setIntentResponse();
                 finish();
             }
         });
@@ -53,20 +51,21 @@ public class SimularActivity extends AppCompatActivity {
     }
 
     public void confirmarSimulacion(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("dias", dias.getProgress()*30);
-
         simularBtnActivo = true;
+        setIntentResponse();
+        finish();
     }
 
     @Override
     public void onBackPressed(){
+        setIntentResponse();
+        finish();
+    }
+
+    private void setIntentResponse(){
         Intent intent = new Intent();
         intent.putExtra("simulado",simularBtnActivo);
         intent.putExtra("dias", dias.getProgress()*30);
         setResult(RESULT_OK, intent);
-
-        finish();
     }
-
 }
