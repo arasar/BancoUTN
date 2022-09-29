@@ -106,7 +106,7 @@
                 android:text="Capital a Invertir ($)" />
 
             <EditText
-                android:id="@+id/CapitalAInvertir"
+                android:id="@+id/capitalAInvertir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
@@ -120,7 +120,8 @@
             android:id="@+id/seekBarSimular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:progress="8"/>
+            android:progress="5"
+            android:max="12"/>
 
         <TextView
             android:id="@+id/textView"
