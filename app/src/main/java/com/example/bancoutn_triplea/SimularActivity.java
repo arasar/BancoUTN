@@ -1,9 +1,11 @@
 package com.example.bancoutn_triplea;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import com.example.bancoutn_triplea.databinding.ActivitySimularBinding;
 public class SimularActivity extends AppCompatActivity {
 
     private ActivitySimularBinding binding;
+    private boolean simularBtnActivo = false;
 
     //Estas variables las necesito para validar que hayan ingresado todos los campo
     //y para despues poder devolver a la otra pantalla
@@ -31,7 +34,19 @@ public class SimularActivity extends AppCompatActivity {
         binding = ActivitySimularBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Button simularBtn = binding.simularBtn;
+        Toolbar toolbar= binding.toolbarSimular;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("simulado",simularBtnActivo);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
 
         dias = binding.seekBarSimular;
 
@@ -40,6 +55,17 @@ public class SimularActivity extends AppCompatActivity {
     public void confirmarSimulacion(View view){
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("dias", dias.getProgress()*30);
+
+        simularBtnActivo = true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent();
+        intent.putExtra("simulado",simularBtnActivo);
+        intent.putExtra("dias", dias.getProgress()*30);
+        setResult(RESULT_OK, intent);
+
         finish();
     }
 
