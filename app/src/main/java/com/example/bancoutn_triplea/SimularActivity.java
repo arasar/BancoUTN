@@ -1,6 +1,7 @@
 package com.example.bancoutn_triplea;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,10 @@ public class SimularActivity extends AppCompatActivity {
 
         binding = ActivitySimularBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Toolbar toolbar= binding.toolbarSimular;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button simularBtn = binding.simularBtn;
 
