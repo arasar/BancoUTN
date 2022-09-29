@@ -18,7 +18,9 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int SIMULAR_ACTIVITY_REQUEST_CODE = 0;
     private ActivityMainBinding binding;
+    private boolean constituirBtnActivo = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void mostrarPantallaSimular(View view){
         Intent intent = new Intent(this, SimularActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, SIMULAR_ACTIVITY_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SIMULAR_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK && data != null) {
+                binding.button2.setEnabled(data.getBooleanExtra("simulado",false));
+            }
+            else{
+                binding.button2.setEnabled(false);
+            }
+        }
     }
 }
