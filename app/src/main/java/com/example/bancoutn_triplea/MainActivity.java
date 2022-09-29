@@ -20,7 +20,9 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int SIMULAR_ACTIVITY_REQUEST_CODE = 0;
     private ActivityMainBinding binding;
+    private boolean constituirBtnActivo = false;
 
     private EditText nombre;
     private EditText apellido;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         + apellido.getText() + "! ")
                 .setMessage("Tu plazo fijo de "
                         + adapter.getItem(monedas.getSelectedItemPosition())
-                        + " por " + diasInv
+                        + " por " + "diasInv"
                         + " ha sido constituido!")
                 .setPositiveButton("Piola!", (dialogInterface, which) -> Log.d("Mensaje", "Plazo fijo constituido"))
                 .show();
@@ -68,10 +70,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void mostrarPantallaSimular(View view) {
         Intent intent = new Intent(this, SimularActivity.class);
+
         intent.putExtra("moneda", adapter.getItem(monedas.getSelectedItemPosition()));
-        startActivity(intent);
         //para habilitar el constituir y probar el cuadro (hay que arreglar)
         Button constituirBtn = binding.button2;
         constituirBtn.setEnabled(true);
+        startActivityForResult(intent, SIMULAR_ACTIVITY_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SIMULAR_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK && data != null) {
+                binding.button2.setEnabled(data.getBooleanExtra("simulado",false));
+            }
+            else{
+                binding.button2.setEnabled(false);
+            }
+        }
+
     }
 }
