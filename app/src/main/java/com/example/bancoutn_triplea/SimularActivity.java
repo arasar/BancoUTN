@@ -23,8 +23,8 @@ public class SimularActivity extends AppCompatActivity {
     //y para despues poder devolver a la otra pantalla
     private EditText TasaNominal;
     private EditText TasaEfectiva;
-    private EditText capitalAInvertir;
-    private SeekBar dias;
+    EditText capitalAInvertir;
+    SeekBar dias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class SimularActivity extends AppCompatActivity {
         });
 
         dias = binding.seekBarSimular;
-
+        capitalAInvertir = binding.capitalAInvertir;
     }
 
     public void confirmarSimulacion(View view){
@@ -65,6 +65,7 @@ public class SimularActivity extends AppCompatActivity {
     private void setIntentResponse(){
         Intent intent = new Intent();
         intent.putExtra("simulado",simularBtnActivo);
+        intent.putExtra("capital", capitalAInvertir.getText().toString());
         intent.putExtra("dias", dias.getProgress()*30);
         setResult(RESULT_OK, intent);
     }
