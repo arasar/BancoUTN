@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="numberDecimal"
                 android:text="" />
 
         </LinearLayout>
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="numberDecimal"
                 android:text="" />
 
         </LinearLayout>
@@ -111,8 +111,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="" />
+                android:text=""
+                android:inputType="numberDecimal"/>
 
         </LinearLayout>
 
@@ -124,7 +124,7 @@
             android:max="12"/>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/diasTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="X días" />

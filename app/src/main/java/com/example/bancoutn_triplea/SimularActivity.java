@@ -5,11 +5,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.example.bancoutn_triplea.databinding.ActivityMainBinding;
 import com.example.bancoutn_triplea.databinding.ActivitySimularBinding;
@@ -19,12 +22,12 @@ public class SimularActivity extends AppCompatActivity {
     private ActivitySimularBinding binding;
     private boolean simularBtnActivo = false;
 
-    //Estas variables las necesito para validar que hayan ingresado todos los campo
-    //y para despues poder devolver a la otra pantalla
-    private EditText TasaNominal;
-    private EditText TasaEfectiva;
+
+    private EditText tasaNominal;
+    private EditText tasaEfectiva;
     EditText capitalAInvertir;
     SeekBar dias;
+    TextView mostrarDias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,32 @@ public class SimularActivity extends AppCompatActivity {
 
         dias = binding.seekBarSimular;
         capitalAInvertir = binding.capitalAInvertir;
+        mostrarDias = binding.diasTextView;
+
+        dias.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+            @Override
+            public void onStopTrackingTouch(SeekBar dias) {
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar dias) {
+            }
+            @Override
+            public void onProgressChanged(SeekBar dias, int progress,boolean fromUser) {
+                mostrarProgreso(progress);
+            }
+        });
+
+        tasaNominal = binding.TasaNominal;
+        tasaEfectiva = binding.TasaEfectiva;
+
+    }
+
+    private void mostrarProgreso(int how_many){
+        String what_to_say = String.valueOf(how_many);
+        mostrarDias.setText(what_to_say);
+
+        int seek_label_pos = (int)((float)(dias.getMeasuredWidth()) * ((float)how_many / 60f));
+        mostrarDias.setX(seek_label_pos);
     }
 
     public void confirmarSimulacion(View view){

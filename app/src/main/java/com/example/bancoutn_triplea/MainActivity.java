@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText apellido;
     private Spinner monedas;
     private ArrayAdapter<String> adapter;
-    Bundle datosDeSimular;
 
     private String capital;
     private int dias;
