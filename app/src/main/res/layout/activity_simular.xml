@@ -127,7 +127,7 @@
             android:id="@+id/diasTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="X días" />
+            android:text="" />
 
         <CheckBox
             android:id="@+id/checkBox"
@@ -149,31 +149,31 @@
                 android:text="Simulador Plazo Fijo en Pesos" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/plazoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Plazo: X días" />
+                android:text="Plazo: " />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/capitalTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Capital: " />
             <!--Hay que autocompletar con los datos ingresados-->
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/interesesGanadosTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Intereses ganados: $ " />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/montoTotalTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Monto total: $ " />
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/montoAnualTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Monto total anual: $ " />
