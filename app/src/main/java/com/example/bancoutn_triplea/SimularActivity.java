@@ -60,6 +60,9 @@ public class SimularActivity extends AppCompatActivity {
             }
         });
 
+        String tipoMoneda = getIntent().getStringExtra("moneda");
+        binding.tituloSimulacion.setText("Simulador Plazo Fijo en "+tipoMoneda);
+
         dias = binding.seekBarSimular;
         capitalAInvertir = binding.capitalAInvertir;
         mostrarDias = binding.diasTextView;
@@ -72,6 +75,8 @@ public class SimularActivity extends AppCompatActivity {
         mostrarIntereses = binding.interesesGanadosTextView;
         mostrarMonto = binding.montoTotalTextView;
         mostrarMontoAnual = binding.montoAnualTextView;
+
+        binding.simularBtn.setEnabled(false);
 
         dias.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             @Override
@@ -96,32 +101,31 @@ public class SimularActivity extends AppCompatActivity {
             @Override public void afterTextChanged(Editable editable) {}
         });
 
-        //mostrarIntereses.setText(cap*tna/100);
+        tasaNominal.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                calcular();
+            }
 
+            @Override public void afterTextChanged(Editable editable) {}
+        });
 
+        tasaEfectiva.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                calcular();
+            }
 
-        //mostrarIntereses.setText("Intereses ganados: $"+ interesMensual);
-
-        //mostrarMontoAnual.setText("Monto anual: $" + interesAnual + capital);
-        //mostrarMonto.setText(cap+cap*tna/100);
-
-        //mostrarMontoAnual.setText(cap + cap * tea / 100);
-        //mostrarMontoAnual.setText("100");
-        //mostrarSimulacion(String.valueOf(tasaNominal), String.valueOf(tasaEfectiva), String.valueOf(capitalAInvertir), String.valueOf(mostrarDias));
+            @Override public void afterTextChanged(Editable editable) {}
+        });
 
     }
 
     private void calcular(){
-        actualizarPlazo(dias.getProgress());
-        actualizarCapital();
-        actualizarInteresesGanados();
-        actualizarMonto();
-        actualizarMontoAnual();
-    }
-
-    private void actualizarMontoAnual() {
         String capitalString = capitalAInvertir.getText().toString();
         boolean capitalValido = validation.validate(capitalString);
 
@@ -131,44 +135,49 @@ public class SimularActivity extends AppCompatActivity {
         String tasaEfectivaString = tasaEfectiva.getText().toString();
         boolean tasaEfectivaValida = validation.validate(tasaEfectivaString);
 
-        if(capitalValido && tasaEfectivaValida && tasaNominalValida){
-            double interesAnual = validation.getDouble(capitalString) * validation.getDouble(tasaNominalString) / 100;
-            double interesMensual = interesAnual * dias.getProgress() * validation.getDouble(capitalString) / 12;
-            double montoAnual = interesAnual + validation.getDouble(capitalString);
-            mostrarMontoAnual.setText("Monto total anual: $" + montoAnual);
+        boolean diasValido = validation.validateProgress(dias.getProgress());
+
+        if(capitalValido && tasaEfectivaValida && tasaNominalValida && diasValido) {
+            binding.simularBtn.setEnabled(true);
+            double capitalDouble = validation.getDouble(capitalString);
+            double tasaNominalDouble = validation.getDouble(tasaNominalString);
+
+            actualizarPlazo(dias.getProgress());
+            actualizarCapital(capitalDouble);
+            actualizarInteresesGanados(capitalDouble,tasaNominalDouble);
+            actualizarMonto(capitalDouble, tasaNominalDouble);
+            actualizarMontoAnual(capitalDouble, tasaNominalDouble);
+        }
+        else{
+            binding.simularBtn.setEnabled(false);
         }
     }
 
-    private void actualizarMonto() {
-        String capitalString = capitalAInvertir.getText().toString();
-        boolean capitalValido = validation.validate(capitalString);
-
-        String tasaNominalString = tasaNominal.getText().toString();
-        boolean tasaNominalValida = validation.validate(tasaNominalString);
-
-        String tasaEfectivaString = tasaEfectiva.getText().toString();
-        boolean tasaEfectivaValida = validation.validate(tasaEfectivaString);
-
-        if(capitalValido && tasaEfectivaValida && tasaNominalValida){
-            double interesAnual = validation.getDouble(capitalString) * validation.getDouble(tasaNominalString) / 100;
-            double interesMensual = interesAnual * dias.getProgress() * validation.getDouble(capitalString) / 12;
-            mostrarMonto.setText("Monto total: $" + interesMensual + validation.getDouble(capitalString));
-        }
-
+    private void actualizarMontoAnual(double capital, double tasaNominal) {
+        double interesAnual = capital * tasaNominal / 100;
+        double montoAnual = interesAnual + capital;
+        mostrarMontoAnual.setText("Monto total anual: $" + montoAnual);
     }
 
-    private void actualizarCapital() {
-        String capital = capitalAInvertir.getText().toString();
-        mostrarCapital.setText("Capital: $" + capital);
+    private void actualizarMonto(double capital, double tasaNominal) {
+        double interesAnual = tasaNominal;
+        double interesMensual = interesAnual / 12;
+        double interesesGanados = (interesMensual) / 100 * capital * dias.getProgress();
+        double montoTotal = interesesGanados + capital;
+
+        mostrarMonto.setText("Monto total: $" + Math.round(montoTotal*1000.0)/1000.0);
     }
 
-    private void actualizarInteresesGanados(){
-        String capital = capitalAInvertir.getText().toString();
-        double interesMes = validation.getDouble(tasaNominal.getText().toString()) / 12;
+    private void actualizarCapital(double capital) {
+        mostrarCapital.setText("Capital: $" + Math.round(capital*1000.0)/1000.0);
+    }
+
+    private void actualizarInteresesGanados(double capital, double tasaNominal){
+        double interesMes = tasaNominal / 12;
         int plazo = dias.getProgress();
-        Log.i("plazo", "actualizarInteresesGanados: "+plazo);
-        double interesesGanados = (interesMes) / 100 * validation.getDouble(capital) * plazo;
-        mostrarIntereses.setText("Intereses ganados: $" + interesesGanados);
+        double interesesGanados = (interesMes) / 100 * capital * plazo;
+
+        mostrarIntereses.setText("Intereses ganados: $" + Math.round(interesesGanados*1000.0)/1000.0);
 
     }
     private void actualizarPlazo(int how_many){

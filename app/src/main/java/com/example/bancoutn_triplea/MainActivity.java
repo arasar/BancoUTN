@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,6 +19,7 @@ import android.widget.Spinner;
 import com.example.bancoutn_triplea.databinding.ActivityMainBinding;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private String capital;
     private int dias;
 
+    private Validation validation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +43,51 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        validation = new Validation();
+
         Toolbar tool1 = binding.toolbar;
         setSupportActionBar(tool1);
+
         String[] opciones_monedas = new String[]{"PESOS", "DOLARES"};
         monedas = binding.spinnerMonedas;
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones_monedas);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monedas.setAdapter(adapter);
+
         Button constituirBtn = binding.button2;
         constituirBtn.setEnabled(false);
         constituirBtn.setOnClickListener(view -> mostrarAlerta());
+
+        binding.simularBtn1.setEnabled(false);
+
         nombre = binding.inputNombre;
         apellido = binding.inputApellido;
+
+        nombre.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                validarDatos(nombre.getText().toString(),apellido.getText().toString());
+            }
+
+            @Override public void afterTextChanged(Editable editable) {}
+        });
+
+        apellido.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                validarDatos(nombre.getText().toString(),apellido.getText().toString());
+            }
+
+            @Override public void afterTextChanged(Editable editable) {}
+        });
+    }
+
+    private void validarDatos(String nombre, String apellido){
+        binding.simularBtn1.setEnabled(validation.validatePerson(nombre, apellido));
     }
 
     private void mostrarAlerta() {
@@ -70,10 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void mostrarPantallaSimular(View view) {
         Intent intent = new Intent(this, SimularActivity.class);
+        String moneda = adapter.getItem(monedas.getSelectedItemPosition()).toLowerCase();
+        intent.putExtra("moneda", moneda);
 
-        intent.putExtra("moneda", adapter.getItem(monedas.getSelectedItemPosition()));
-        //para habilitar el constituir y probar el cuadro (hay que arreglar)
-        Button constituirBtn = binding.button2;
         startActivityForResult(intent, SIMULAR_ACTIVITY_REQUEST_CODE);
     }
 
