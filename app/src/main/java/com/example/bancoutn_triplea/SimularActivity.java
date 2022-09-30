@@ -57,6 +57,8 @@ public class SimularActivity extends AppCompatActivity {
         dias = binding.seekBarSimular;
         capitalAInvertir = binding.capitalAInvertir;
         mostrarDias = binding.diasTextView;
+        mostrarDias.setText("0 días");
+
         tasaNominal = binding.TasaNominal;
         tasaEfectiva = binding.TasaEfectiva;
         mostrarPlazo = binding.plazoTextView;
