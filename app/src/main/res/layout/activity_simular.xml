@@ -128,7 +128,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:progress="0"
-                android:max="12"/>
+                android:max="12"
+                android:layout_marginTop="20sp"/>
 
             <TextView
                 android:id="@+id/diasTextView"
@@ -153,7 +154,9 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textAlignment="center"
-                    android:text="Simulador Plazo Fijo en "/>
+                    android:text="Simulador Plazo Fijo en "
+                    android:layout_marginTop="30sp"
+                    android:layout_marginBottom="10sp"/>
 
                 <TextView
                     android:id="@+id/plazoTextView"
