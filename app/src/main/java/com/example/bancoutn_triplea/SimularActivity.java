@@ -6,6 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
@@ -25,19 +27,23 @@ public class SimularActivity extends AppCompatActivity {
 
     private EditText tasaNominal;
     private EditText tasaEfectiva;
-    EditText capitalAInvertir;
-    SeekBar dias;
-    TextView mostrarDias;
-    TextView mostrarPlazo;
-    TextView mostrarCapital;
-    TextView mostrarIntereses;
-    TextView mostrarMonto;
-    TextView mostrarMontoAnual;
+    private EditText capitalAInvertir;
+    private SeekBar dias;
+    private TextView mostrarDias;
+    private TextView mostrarPlazo;
+    private TextView mostrarCapital;
+    private TextView mostrarIntereses;
+    private TextView mostrarMonto;
+    private TextView mostrarMontoAnual;
+
+    private Validation validation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simular);
+
+        validation = new Validation();
 
         binding = ActivitySimularBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -58,10 +64,10 @@ public class SimularActivity extends AppCompatActivity {
         capitalAInvertir = binding.capitalAInvertir;
         mostrarDias = binding.diasTextView;
         mostrarDias.setText("0 días");
-
         tasaNominal = binding.TasaNominal;
         tasaEfectiva = binding.TasaEfectiva;
         mostrarPlazo = binding.plazoTextView;
+        mostrarPlazo.setText("Plazo: 0 días");
         mostrarCapital = binding.capitalTextView;
         mostrarIntereses = binding.interesesGanadosTextView;
         mostrarMonto = binding.montoTotalTextView;
@@ -69,27 +75,35 @@ public class SimularActivity extends AppCompatActivity {
 
         dias.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             @Override
-            public void onStopTrackingTouch(SeekBar dias) {
-            }
+            public void onStopTrackingTouch(SeekBar dias) {}
             @Override
-            public void onStartTrackingTouch(SeekBar dias) {
-            }
+            public void onStartTrackingTouch(SeekBar dias) {}
             @Override
             public void onProgressChanged(SeekBar dias, int progress,boolean fromUser) {
                 mostrarProgreso(progress);
             }
         });
 
-        /*mostrarIntereses.setText(cap*tna/100);
-        String capital = capitalAInvertir.getText().toString();
-        String tna = tasaNominal.getText().toString();
-        int interesAnual = Integer.valueOf(capital) * Integer.valueOf(tna) / 100;
-        int interesMensual = interesAnual *  dias.getProgress() / 12;*/
+        capitalAInvertir.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-        /*mostrarCapital.setText("Capital: $" + capitalAInvertir.getText().toString());
-        mostrarIntereses.setText("Intereses ganados: $"+ interesMensual);
-        mostrarMonto.setText("Monto total: $" + interesMensual + capital);
-        mostrarMontoAnual.setText("Monto anual: $" + interesAnual + capital);*/
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                calcular();
+            }
+
+            @Override public void afterTextChanged(Editable editable) {}
+        });
+
+        //mostrarIntereses.setText(cap*tna/100);
+
+
+
+
+
+        //mostrarIntereses.setText("Intereses ganados: $"+ interesMensual);
+
+        //mostrarMontoAnual.setText("Monto anual: $" + interesAnual + capital);
         //mostrarMonto.setText(cap+cap*tna/100);
 
         //mostrarMontoAnual.setText(cap + cap * tea / 100);
@@ -98,16 +112,56 @@ public class SimularActivity extends AppCompatActivity {
 
     }
 
-    private void mostrarProgreso(int how_many){
-        String what_to_say = String.valueOf(how_many*30+" días");
-        mostrarDias.setText(what_to_say);
-        //int seek_label_pos = (int)((float)(dias.getMeasuredWidth()) * ((float)how_many / 60f));
-        mostrarDias.setX(100);
-        String plazo = String.valueOf("Plazo: "+how_many*30+" días");
-        mostrarPlazo.setText(plazo);
+    private void calcular(){
+        actualizarPlazo(dias.getProgress());
+        actualizarCapital();
+        actualizarInteresesGanados();
+        actualizarMonto();
+        actualizarMontoAnual();
+    }
+
+    private void actualizarMontoAnual() {
+    }
+
+    private void actualizarMonto() {
+        String capitalString = capitalAInvertir.getText().toString();
+        boolean capitalValido = validation.validate(capitalString);
+
+        String tasaNominalString = tasaNominal.getText().toString();
+        boolean tasaNominalValida = validation.validate(tasaNominalString);
+
+        String tasaEfectivaString = tasaEfectiva.getText().toString();
+        boolean tasaEfectivaValida = validation.validate(tasaEfectivaString);
+
+        if(capitalValido && tasaEfectivaValida && tasaNominalValida){
+            double interesAnual = validation.getDouble(capitalString) * validation.getDouble(tasaNominalString) / 100;
+            double interesMensual = interesAnual * dias.getProgress() / 12;
+            mostrarMonto.setText("Monto total: $" + interesMensual + capital);
+        }
 
     }
 
+    private void actualizarCapital() {
+        String capital = capitalAInvertir.getText().toString();
+        mostrarCapital.setText("Capital: $" + capital);
+    }
+
+    private void actualizarInteresesGanados(){
+        String capital = capitalAInvertir.getText().toString();
+        int plazo = dias.getProgress();
+
+    }
+    private void actualizarPlazo(int how_many){
+        String plazo = String.valueOf("Plazo: "+how_many*30+" días");
+        mostrarPlazo.setText(plazo);
+    }
+
+    private void mostrarProgreso(int how_many){
+        String what_to_say = String.valueOf(how_many*30+" días");
+        mostrarDias.setText(what_to_say);
+        mostrarDias.setX(100);
+        actualizarPlazo(how_many);
+    }
 
     public void confirmarSimulacion(View view){
         simularBtnActivo = true;

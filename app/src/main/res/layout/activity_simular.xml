@@ -158,25 +158,25 @@
                 android:id="@+id/capitalTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Capital: " />
-            <!--Hay que autocompletar con los datos ingresados-->
+                android:text="Capital: $ 0" />
+
             <TextView
                 android:id="@+id/interesesGanadosTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Intereses ganados: $ " />
+                android:text="Intereses ganados: $ 0" />
 
             <TextView
                 android:id="@+id/montoTotalTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Monto total: $ " />
+                android:text="Monto total: $ 0" />
 
             <TextView
                 android:id="@+id/montoAnualTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Monto total anual: $ " />
+                android:text="Monto total anual: $ 0" />
         </LinearLayout>
 
         <RelativeLayout
