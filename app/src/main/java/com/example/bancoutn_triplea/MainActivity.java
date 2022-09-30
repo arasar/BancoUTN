@@ -28,7 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText apellido;
     private Spinner monedas;
     private ArrayAdapter<String> adapter;
-    Bundle dias;
+
+    private String capital;
+    private int dias;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
         constituirBtn.setOnClickListener(view -> mostrarAlerta());
         nombre = binding.inputNombre;
         apellido = binding.inputApellido;
-        //dias = getIntent().getExtras();
-        //int diasInv = dias.getInt("dias");
-        Intent mIntent = getIntent();
-        int diasInv = mIntent.getIntExtra("dias", 0);
-
     }
 
     private void mostrarAlerta() {
@@ -61,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
                         + nombre.getText() + " "
                         + apellido.getText() + "! ")
                 .setMessage("Tu plazo fijo de "
-                        + adapter.getItem(monedas.getSelectedItemPosition())
-                        + " por " + "diasInv"
-                        + " ha sido constituido!")
+                        + capital + " "
+                        + adapter.getItem(monedas.getSelectedItemPosition()).toLowerCase()
+                        + " por "
+                        + dias
+                        + " dias ha sido constituido!")
                 .setPositiveButton("Piola!", (dialogInterface, which) -> Log.d("Mensaje", "Plazo fijo constituido"))
                 .show();
     }
@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == SIMULAR_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK && data != null) {
                 binding.button2.setEnabled(data.getBooleanExtra("simulado",false));
+                capital = data.getExtras().getString("capital");
+                dias = data.getExtras().getInt("dias");
             }
             else{
                 binding.button2.setEnabled(false);
